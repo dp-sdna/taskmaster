@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+       <!-- <link rel="stylesheet" href="css/datepicker.css"> -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-editable.css">
+        <link rel="stylesheet" href="css/select2.css">
+        <style>
+            body {
+                padding-top: 75px;
+                padding-bottom: 40px;
+            }
+        </style>
+        
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/bootstrap-responsive.css">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+        <script src="js/vendor/angular.min.js"></script>
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner nvb2">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+
+                            <a class="brand" href="index.html"><span class="w300">Task</span>Trac2</a>       
+                              <div class="nav-collapse collapse">
+                                <ul class="nav">
+                                    <li class="divider-vertical"></li>
+                                    <li>
+                                        <div class="lnk">
+                                            <a href="add-task.php" class="m_link"><i class="icon-plus icon-white"></i> Add Task</a>
+                                        </div>
+                                    </li>
+                                    <li class="divider-vertical"></li>
+                                    <li class="active">
+                                        <div class="lnk">
+                                            <a href="view-task.html" class="m_link">My Tasks</a>
+                                            <a href="#" class="notif">4</a>
+                                        </div>
+                                    </li>
+                                    <li class="divider-vertical"></li>
+                                    <li>
+                                        <div class="lnk">
+                                            <a href="view-task.html" class="m_link">My Work Items</a>
+                                        </div>
+                                    <li class="divider-vertical"></li>
+                                    <li class="active">
+                                        <div class="lnk">
+                                            <a href="view-task.html" class="m_link">My Division</a>
+                                        </div>
+                                     
+                                    </li>
+                                    <li class="divider-vertical"></li>
+                                    <li>
+                                        <div class="lnk">
+                                            <a href="view-task.html" class="m_link">All Tasks</a>
+                                            <a href="#" class="notif">45</a>
+                                        </div>
+                                        
+                                    </li>
+                                    <li class="divider-vertical"></li>
+                                    <li>
+                                        <div class="lnk">
+                                            <a href="view-task.html" class="m_link">Reports</a>
+                                        </div>
+                                    <li class="divider-vertical"></li>
+                                    <!-- <li class="divider-vertical"></li>
+                                    <li><a href="#contact">Exit</a></li>-->
+                                </ul>
+                                    <form class="search_form pull-right">
+                                            <div class="input-append">
+                                                <input class="exp span2" id="search-input" type="text" data-toggle="dropdown" placeholder="E.g. #9 for Task 9">
+                                                <button class="btn-b btn" type="button">Search</button>
+                                                <ul class="dropdown-menu live-search">
+                                                    <li><a href="#"><span>Task 541</span> <small class="muted">Division 1</small></a></li>
+                                                    <li><a href="#">Task 542 <small class="muted">Division 2</small></a></li>
+                                                    <li><a href="#">Task 543</a></li>
+                                                </ul>
+                                            </div>
+                                        <!--<p class="search-hint"><small>Enter # &lt;N&gt; to go direct to the task. E.g. #9 for Task 9</small></p>-->
+                                    </form>
+                                </div><!--/.nav-collapse -->
+                  
+                </div>
+            </div>
+        </div>
+        <div class="title-container">
+    <h1 class="page-title">Add New Task</h1>
+    <a href="#" class="pull-right expand-hints" style="display:none"><small> Need help?</small></a>
+</div>
+<div class="main-container container-fluid page" id="app1" ng-app="appOne" ng-controller="AppOneController">
+<form class="form-horizontal">
+<div class="page-hints alert alert-info">
+   <button type="button" class="close" data-dismiss="alert">&times; <small>Close</small></button>
+    <h4>Who should enter a task?</h4>
+    <p><i class="icon icon-question-sign2"></i> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+    <h4>What represents a task?</h4>
+    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p>
+    <h4>What needs to be entered?</h4>
+    <p>Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+</div> <!--/alert-->
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="control-group">
+                    <label class="control-label" for="task-title">Task Title</label>
+                    <div class="controls">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <input type="text" id="task-title" placeholder="Task Title" class="input-xxlarge">
+                                <span class="help-inline alert alert-info"><small><i class="icon icon-info-sign"></i> Short, snappy title that uniquely describes the intention of the package of work.</small></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="leader">Leader</label>
+                    <div class="controls">
+                        <select>
+                            <option>Division 2 - Role 2</option>
+                            <option>Division 2 - Role 3</option>
+                            <option>Division 2 - Role 4</option>
+                        </select>
+                        <span class="help-inline alert alert-info"><small><i class="icon icon-info-sign"></i> Information about the leader.</small></span>
+                    </div>
+                </div>
+                <hr/> 
+                <p class="lead">Customer information</p>
+                <div class="control-group">
+                    <label class="control-label" for="name">Name</label>
+                    <div class="controls">
+                        <input type="text" id="name" placeholder="Name">
+                        <span class="help-inline alert alert-info"><small><i class="icon icon-info-sign"></i> Enter your name here...</small></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="tally">Tally</label>
+                    <div class="controls">
+                        <input type="text" id="tally" placeholder="Tally">
+                            <span class="help-inline alert alert-info"><small><i class="icon icon-info-sign"></i> Information about Tally...</small></span>
+                    </div>
+                </div> 
+                    <div class="control-group">
+                        <label class="control-label" for="organisation">Organisation</label>
+                        <div class="controls">
+                            <select>
+                                <option>Organisation 1</option>
+                                <option>Organisation 2</option>
+                                <option>Organisation 3</option>
+                            <select>
+                                <span class="help-inline alert alert-info"><small><i class="icon icon-info-sign"></i> Select organisation...</small></span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="phone">Phone</label>
+                        <div class="controls">
+                            <input type="text" id="phone" placeholder="Phone">
+                                <span class="help-inline alert alert-info"><small><i class="icon icon-info-sign"></i> Enter your phone here...</small></span>
+                        </div>
+                    </div>
+                    <hr/>
+                    
+                    <p class="lead">Background</p>
+                    <div class="control-group">
+                        <label class="control-label" for="categories">Categories</label>
+                        <div class="controls">
+                            <a data-original-title="Enter tags" data-pk="1" data-type="select2" id="categ" href="#" class="editable editable-click"></a>
+                        </div>
+                    </div>
+                
+                  <div class="control-group">
+                        <label class="control-label" for="priority">Priority</label>
+                        <div class="controls">
+                            <select>
+                                <option>Priority type 1</option>
+                                <option>Priority type 2</option>
+                                <option>Priority type 3</option>
+                            </select>
+                        </div>
+                    </div>
+                  <div class="control-group">
+                        <label class="control-label" for="division">Division</label>
+                        <div class="controls">
+                            <select>
+                                <option>Division 1</option>
+                                <option>Division 2</option>
+                                <option>Division 3</option>
+                            </select>
+                        </div>
+                    </div>
+                  <div class="control-group">
+                        <label class="control-label" for="priority">Description</label>
+                        <div class="controls">
+                            <textarea class="input-xxlarge" placeholder="Add description here..."></textarea>
+                        </div>
+                    </div>
+                   <div class="control-group">
+                        <label class="control-label" for="priority">Impact</label>
+                        <div class="controls">
+                            <textarea class="input-xxlarge" placeholder="Add impact details here..."></textarea>
+                        </div>
+                    </div>
+                   <div class="control-group">
+                        <label class="control-label" for="priority">Resources</label>
+                        <div class="controls">
+                            <textarea class="input-xxlarge" placeholder="Add resources here..."></textarea>
+                        </div>
+                    </div>    
+            </div><!--/span12-->
+            <!--<div class="span2">
+                <p class="lead">Guidance</p>
+                <div class="alert alert-success">
+                    <h4>Task Title</h4>
+                    <p>Short, snappy title that uniquely describes the intention of the package of work.</p>
+                </div>
+            </div>-->
+        </div><!--/row-fluid-->
+        <hr/>
+        <div class="clearfix">
+            <p class="lead">Work Items</p>
+                 <table class="table table-condensed content-table">
+                    <colgroup>
+                        <col style="width: 2%;">
+                        <col style="width: 13%;">
+                        <col style="width: 20%;">
+                        <col style="width: 20%;">
+                        <col>
+                        <col>
+                        <col>
+                        <col style="width: 25%;">
+                        <col style="width: 3%;"> 
+                    </colgroup>
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>Item type</th>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>%</td>
+                                <th>Start Date</th>
+                                <th>Due Date</th>
+                                <th>People</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="parent-line">
+                                <td><a class="btn btn-mini btn-mini-c expand" data-toggle="button"><i class="icon-plus"></i></a></td>
+                                <td>
+                                    
+                                    <a title="Trial" data-toggle="button" data-item-type="trial" class="btn btn-mini btn-mini-b"><i class="icon-sprite icon-trial"></i></a>
+                                    <a title="Finance" data-toggle="button" data-item-type="finance" class="btn-mini-b btn-mini btn"><i class="icon-sprite icon-finance"></i></a>
+                                    <a title="Publication" data-toggle="button" data-item-type="publication" class="btn-mini-b btn-mini btn"><i class="icon-sprite icon-publication"></i></a>
+                                    <a title="Deliverable" data-toggle="button" data-item-type="deliverable" class="btn-mini-b btn-mini btn"><i class="icon-sprite icon-deliverable"></i></a>
+                                   
+                                </td>
+                                 <td><a data-pk="1" data-type="text" href="#" class="editable">Enter task item here..</a></td>
+                                <td><input type="text" class="input-medium"></td>
+                                <td>
+                                    0
+                                    <div class="btn-group">
+                                        <!--<a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i> User</a>-->
+                                        <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-tasks"></i> <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                        <li><a href="#">0%</a></li>
+                                        <li><a href="#">25%</a></li>
+                                        <li><a href="#">50%</a></li>
+                                        <li><a href="#">75%</a></li>
+                                        <li><a href="#">100%</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td><a href="#"  data-type="date" data-pk="1" data-url="/post" data-original-title="Select date" class="date_picker editable">15/05/1984</a></td>
+                                <td><a href="#"  data-type="date" data-pk="1" data-url="/post" data-original-title="Select date" class="date_picker editable">23/03/2013</a></td>
+                                <td>
+                                    <a data-original-title="Enter tags" data-pk="1" data-type="select2" class="people" href="#" class="editable editable-click"></a>
+                                </td>
+                                <td class="text-center"><a class="btn btn-mini remove-btn"><i class="icon-white icon-remove"></i></a></td>
+                            </tr>
+                            <tr class="child-line">
+                                <td class="arrow-indent">&#8627;</td>
+                                <td colspan="8">
+
+                                    <ul class="nav nav-pills tabs-table">
+                                        <li><a href="#trial" data-toggle="tab">Trial</a></li>
+                                        <li><a href="#finance" data-toggle="tab">Finance</a></li>
+                                        <li><a href="#publication" data-toggle="tab">Publication</a></li>
+                                        <li><a href="#deliverable" data-toggle="tab">Deliverable</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane" id="trial">
+                                            <ul>
+                                                <li><label>Participants:</label> INVI, GLAM, EDIN;</li>
+                                                <li><label>Objectives:</label> Close Support</li>
+                                            </ul>
+                                            
+                                        </div>
+                                        <div class="tab-pane" id="finance">
+                                            <ul>
+                                                <li><label>Business Case submitted:</label> <a href="#"  data-type="date" data-pk="1" data-url="/post" data-original-title="Select date" class="date_picker editable">12/04/2013</a></li>
+                                                <li><label>Statement of Requirement submitted:</label> <a href="#"  data-type="date" data-pk="1" data-url="/post" data-original-title="Select date" class="date_picker editable">15/03/2013</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="tab-pane" id="publication">Publication</div>
+                                        <div class="tab-pane" id="deliverable">Deliverable</div>
+                                    </div>
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                        <tfoot>
+                            <tr><td colspan="9"> <a href="#" class="btn btn2 btn-small" id="addNewLine"><i class="icon-plus"></i> New Work Item</a></td></tr>
+                        </tfoot>
+                   </table>
+        </div>
+           <div class="form-actions">
+                <input class="btn btn2 btn-primary btn-large" type="submit" value="Create Task">
+                <a href="#" class="btn btn2 btn-large cancel-edit">Cancel</a>
+            </div>
+    </form>
+        </div> <!-- /container -->
+        <footer class="page-footer">
+                <p class="text-center">&copy; TaskTrac2 2014</p>
+        </footer>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <!--<script src="js/vendor/bootstrap-editable.min.js"></script>-->
+        <script src="js/vendor/bootstrap-editable.min.js"></script>
+        <script src="js/vendor/select2.js"></script>
+        <script src="js/vendor/address.js"></script>
+
+        <script src="js/main.js"></script>
+	 <script>
+    var AppOne = angular.module("appOne", []);
+    AppOne.controller("AppOneController",
+            function($scope) {
+
+            }
+    );
+    angular.bootstrap(document.getElementById("app1"),['appOne']);
+
+</script>
+
+    </body>
+</html>
