@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Tasktrac2Master</title>
+    <base href="/tasktrac2-master/"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- <link rel="stylesheet" href="css/datepicker.css"> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-editable.css">
+    <link rel="stylesheet" href="css/select2.css">
+    <style>
+        body {
+            padding-top: 75px;
+            padding-bottom: 40px;
+        }
+    </style>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap-responsive.css">
+    <script src="js/vendor/angular.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+    <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner nvb2">
+            <div class="container-fluid">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+
+                <a class="brand" href="index.php"><span class="w300">Task</span>Trac2</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <div class="lnk">
+                                <a href="add-task.html" class="m_link"><i class="icon-plus icon-white"></i> Add Task</a>
+                            </div>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li class="active">
+                            <div class="lnk">
+                                <a href="view-task.html" class="m_link">My Tasks</a>
+                                <a href="#" class="notif">4</a>
+                            </div>
+                        </li>
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <div class="lnk">
+                                <a href="view-task.html" class="m_link">My Work Items</a>
+                            </div>
+                            <li class="divider-vertical"></li>
+                            <li class="active">
+                                <div class="lnk">
+                                    <a href="view-task.html" class="m_link">My Division</a>
+                                </div>
+
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li>
+                                <div class="lnk">
+                                    <a href="view-task.html" class="m_link">All Tasks</a>
+                                    <a href="#" class="notif">45</a>
+                                </div>
+
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li>
+                                <div class="lnk">
+                                    <a href="view-task.html" class="m_link">Reports</a>
+                                </div>
+                                <li class="divider-vertical"></li>
+                                <!-- <li class="divider-vertical"></li>
+                                    <li><a href="#contact">Exit</a></li>-->
+                    </ul>
+                    <form class="search_form pull-right">
+                        <div class="input-append">
+                            <input class="exp span2" id="search-input" type="text" data-toggle="dropdown" placeholder="E.g. #9 for Task 9">
+                            <button class="btn-b btn" type="button">Search</button>
+                            <ul class="dropdown-menu live-search">
+                                <li><a href="#"><span>Task 541</span> <small class="muted">Division 1</small></a></li>
+                                <li><a href="#">Task 542 <small class="muted">Division 2</small></a></li>
+                                <li><a href="#">Task 543</a></li>
+                            </ul>
+                        </div>
+                        <!--<p class="search-hint"><small>Enter # &lt;N&gt; to go direct to the task. E.g. #9 for Task 9</small></p>-->
+                    </form>
+                </div>
+                <!--/.nav-collapse -->
+
+            </div>
+        </div>
+    </div>
+    <!--<h1>My Division</h1>
+
+    <div class="title-container">
+        <h1 class="page-title">My tasks</h1>
+    </div>-->
+    <div class="main-container container-fluid" id="app1" ng-app="appOne" ng-controller="AppOneController">
+        <div class="well clearfix actions">
+            <div class="pull-left">
+                <div class="btn-group btngr2" data-toggle="buttons-radio">
+                    <button type="button" class="btn btn2" id="lite-view"><i class="icon icon-align-justify"></i> List</button>
+                    <button type="button" class="btn btn2 active" id="summary-view"><i class="icon icon-th-list"></i> Summary</button>
+                    <button type="button" class="btn btn2" id="detail-view"><i class="icon icon-list-alt"></i> Detail</button>
+                </div>
+            </div>
+            <div class="filter pull-right">
+                <label>Filter:</label>
+                <div class="btn-group btngr2" data-toggle="buttons-checkbox">
+                    <button type="button" class="btn btn2"><i class="st_legend st_scoped"></i> Being Scoped</button>
+                    <button type="button" class="btn btn2 active"><i class="st_legend st_pending"></i> Pending</button>
+                    <button type="button" class="btn btn2 active"><i class="st_legend st_live"></i> Live</button>
+                    <button type="button" class="btn btn2"><i class="st_legend st_completed"></i> Completed</button>
+                    <button type="button" class="btn btn2"><i class="st_legend st_suspended"></i> Suspended</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tasks-list" id="app2" ng-app="appTwo" ng-controller="AppTwoController">
+            <div class="clearfix task-item">
+                <div class="inner-box">
+                    <div class="task-content">
+                        <div class="buttons pull-right">
+                            <a href="#statusModal" role="button" class="btn btn2 btn-primary btn-small" data-toggle="modal"><i class="icon-tag icon-white"></i> Add Status Report</a>
+                            <a href="view-task.html" class="btn btn2 btn-small"><i class="icon-pencil"></i> Edit</a>
+                        </div>
+                        <span class="status status-scoped">Completed</span><a href="view-task.html" class="task-title l1">Write new report for local newspapers</a>
+                        <p class="latest-report"><span class="lr_label">Latest report:</span> Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                    </div>
+                    <!--/task-content-->
+                    <div class="task-footer">
+                        <a type="button" class="btn btn-expand" data-toggle="button"><span class="workItemsNo">5</span> work items <span class="caret"></span></a>
+                        <div class="btn-group btn-nav select-period pull-right">
+                            <button class="btn btn2 btn-mini"><i class="icon-arrDouble-left"></i></button>
+                            <button class="btn btn2 btn-mini"><i class="icon-chevron-left"></i></button>
+                            <div class="btn-group">
+                                <a class="btn  btn2 btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+                                        6 months
+                                        <span class="caret"></span>
+                                    </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">3 months</a></li>
+                                    <li><a href="#">6 months</a></li>
+                                    <li><a href="#">12 months</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn2 btn-mini"><i class="icon-chevron-right"></i></button>
+                            <button class="btn btn2 btn-mini"><i class="icon-arrDouble-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!--/inner-box-->
+                <div class="work-items-container">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <table class="table table-condensed content-table">
+                                <colgroup>
+                                    <col style="width: 100px;">
+                                    <col style="width: 25%;">
+                                    <col style="width: 10%;">
+                                    <col style="width: 10%;">
+                                    <col span="6" style="width: 12%;text-align:center;background:#fffef2;border-right:1px solid #CCC;">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Work Item</th>
+                                        <th>Complete</td>
+                                            <th>End Date</th>
+                                            <th class="text-center">Apr</th>
+                                            <th class="text-center">May</th>
+                                            <th class="text-center">Iun</th>
+                                            <th class="text-center">Iul</th>
+                                            <th class="text-center">Aug</th>
+                                            <th class="text-center">Sep</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>7 - T2 - Task no.2 - Work Item 2</td>
+                                        <td><a data-type="select" data-pk="1" class="complete-p" data-title="">0%</a></td>
+                                        <td><a data-type="date" data-pk="1" class="end-date" data-title="">15/05/1984</a></td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:100%">
+                                                    <div class="bar" style="width: 60%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>Product Design</td>
+                                        <td><a data-type="select" data-pk="1" class="complete-p" data-title="">25%</a></td>
+                                        <td><a data-type="date" data-pk="1" class="end-date" data-title="">13/02/2013</a></td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:70%;left:20%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                        </td>
+                                        <td>System analysis</td>
+                                        <td><a data-type="select" data-pk="1" class="complete-p" data-title="">50%</a></td>
+                                        <td><a data-type="date" data-pk="1" class="end-date" data-title="">13/08/2013</a></td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:90%;left:50%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>Progress bar 3</td>
+                                        <td><a data-type="select" data-pk="1" class="complete-p" data-title="">100%</a></td>
+                                        <td><a data-type="date" data-pk="1" class="end-date" data-title="">15/05/2013</a></td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:90%;left:-50%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/row-fluid-->
+                </div>
+            </div>
+
+            <div class="clearfix task-item">
+                <div class="inner-box">
+                    <div class="task-content">
+                        <div class="buttons pull-right">
+                            <a href="#statusModal" role="button" class="btn btn2 btn-primary btn-small" data-toggle="modal"><i class="icon-tag icon-white"></i> Add Status Report</a>
+                            <a href="view-task.html" class="btn btn2 btn-small"><i class="icon-pencil"></i> Edit</a>
+                        </div>
+                        <span class="status status-complete">Completed</span><a href="view-task.html" class="task-title l3">Execute test plan according with the requirements</a>
+                        <p class="latest-report"><span class="lr_label">Latest report:</span> Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                    </div>
+                    <!--/task-content-->
+                    <div class="task-footer">
+                        <a type="button" class="btn btn-expand" data-toggle="button"><span class="workItemsNo">5</span> work items <span class="caret"></span></a>
+                        <div class="btn-group btn-nav select-period pull-right">
+                            <button class="btn btn2 btn-mini"><i class="icon-arrDouble-left"></i></button>
+                            <button class="btn btn2 btn-mini"><i class="icon-chevron-left"></i></button>
+                            <div class="btn-group">
+                                <a class="btn  btn2 btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+                                        6 months
+                                        <span class="caret"></span>
+                                    </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">3 months</a></li>
+                                    <li><a href="#">6 months</a></li>
+                                    <li><a href="#">12 months</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn2 btn-mini"><i class="icon-chevron-right"></i></button>
+                            <button class="btn btn2 btn-mini"><i class="icon-arrDouble-right"></i></button>
+
+                        </div>
+                    </div>
+                </div>
+                <!--/inner-box-->
+                <div class="work-items-container">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <table class="table table-condensed content-table">
+                                <colgroup>
+                                    <col style="width: 100px;">
+                                    <col style="width: 25%;">
+                                    <col style="width: 10%;">
+                                    <col style="width: 10%;">
+                                    <col span="6" style="width: 12%;text-align:center;background:#fffef2;border-right:1px solid #CCC;">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Work Item</th>
+                                        <th>Complete</td>
+                                            <th>End Date</th>
+                                            <th class="text-center">Apr</th>
+                                            <th class="text-center">May</th>
+                                            <th class="text-center">Iun</th>
+                                            <th class="text-center">Iul</th>
+                                            <th class="text-center">Aug</th>
+                                            <th class="text-center">Sep</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>7 - T2 - Task no.2 - Work Item 2</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:100%">
+                                                    <div class="bar" style="width: 60%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>Progress bar 1</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:70%;left:20%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                        </td>
+                                        <td>Progress bar 2</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:90%;left:50%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>Progress bar 3</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:90%;left:-50%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/row-fluid-->
+                </div>
+            </div>
+
+            <div class="clearfix task-item">
+                <div class="inner-box">
+                    <div class="task-content">
+                        <div class="buttons pull-right">
+                            <a href="#statusModal" role="button" class="btn btn2 btn-primary btn-small" data-toggle="modal"><i class="icon-tag icon-white"></i> Add Status Report</a>
+                            <a href="view-task.html" class="btn btn2 btn-small"><i class="icon-pencil"></i> Edit</a>
+                        </div>
+                        <span class="status status-pending">Pending</span><a href="view-task.html" class="task-title l2">Organise Xmas Lunch</a>
+                        <p class="latest-report"><span class="lr_label">Latest report:</span> Lorem Ipsum is simply dummy text of the printing and
+                            typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+                    </div>
+                    <!--/task-content-->
+                    <div class="task-footer">
+                        <a type="button" class="btn btn-expand" data-toggle="button"><span class="workItemsNo">5</span> work items <span class="caret"></span></a>
+                        <div class="btn-group btn-nav select-period pull-right">
+                            <button class="btn btn2 btn-mini"><i class="icon-arrDouble-left"></i></button>
+                            <button class="btn btn2 btn-mini"><i class="icon-chevron-left"></i></button>
+                            <div class="btn-group">
+                                <a class="btn  btn2 btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+                                                6 months
+                                                <span class="caret"></span>
+                                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">3 months</a></li>
+                                    <li><a href="#">6 months</a></li>
+                                    <li><a href="#">12 months</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn2 btn-mini"><i class="icon-chevron-right"></i></button>
+                            <button class="btn btn2 btn-mini"><i class="icon-arrDouble-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!--/inner-box-->
+                <div class="work-items-container">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <table class="table table-condensed content-table">
+                                <colgroup>
+                                    <col style="width: 100px;">
+                                    <col style="width: 25%;">
+                                    <col style="width: 10%;">
+                                    <col style="width: 10%;">
+                                    <col span="6" style="width: 12%;text-align:center;background:#fffef2;border-right:1px solid #CCC;">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Work Item</th>
+                                        <th>Complete</td>
+                                            <th>End Date</th>
+                                            <th class="text-center">Apr</th>
+                                            <th class="text-center">May</th>
+                                            <th class="text-center">Iun</th>
+                                            <th class="text-center">Iul</th>
+                                            <th class="text-center">Aug</th>
+                                            <th class="text-center">Sep</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>7 - T2 - Task no.2 - Work Item 2</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="100%">
+                                                    <div class="bar" style="width: 60%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>Progress bar 1</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:70%;left:20%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-finance"></i>
+                                        </td>
+                                        <td>Progress bar 2</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:90%;left:50%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="icon-sprite icon-trial"></i>
+                                            <i class="icon-sprite icon-publication"></i>
+                                            <i class="icon-sprite icon-deliverable"></i>
+                                        </td>
+                                        <td>Progress bar 3</td>
+                                        <td>25%</td>
+                                        <td>24/04/2013</td>
+                                        <td colspan="6" class="timelineCell">
+                                            <div class="progress-line">
+                                                <div class="progress" style="width:90%;left:-50%;">
+                                                    <div class="bar" style="width: 80%;"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/row-fluid-->
+                </div>
+                <!--/work-items-container-->
+            </div>
+        </div>
+        <!--/tasks-list-->
+
+        <!-- TO BE REMOVED -- STATUSES EXEMPLIFICATION -->
+        <!-- <div style="background:#FFF;padding:10px;">
+    <span class="status status-complete">Completed</span>
+    <span class="status status-pending">Pending</span>
+    <span class="status status-scoped">Being Scoped</span>
+    <span class="status status-live">Live</span>
+    <span class="status status-suspended">Suspended</span>
+    <span class="pull-right muted info note"><em>This container is for presentation purpose</em></span>
+    </div>-->
+        <!--- /remove status exemplification --->
+
+
+        <div id="app3" ng-app="appThree" ng-controller="AppThreeController">
+            <div id="statusModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>Change Status</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">#30 - T30 - Task no.30</p>
+                    <div class="row-fluid">
+                        <div class="span7">
+                            <div class="control-group">
+                                <label>Status:</label>
+                                <select>
+                        <option>Live</options>
+                        <option>Suspended</options>
+                        <option>Completed</options>
+                    </select>
+                            </div>
+                            <div class="control-group">
+                                <label style="display:inline">Comment:</label><small style="margin-left:125px" class="text-error">Characters left: 255</small>
+                                <textarea class="input-xlarge"></textarea>
+                            </div>
+                        </div>
+                        <!--/span7-->
+                    </div>
+                </div>
+                <!--/modal-body-->
+                <div class="modal-footer">
+                    <button class="btn btn2 btn-primary">Change Status</button>
+                    <button class="btn btn2" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+            <!--/modal-->
+        </div>
+        <!--/app3-->
+
+    </div>
+    <!-- /container -->
+    <footer class="page-footer">
+        <p class="text-center">&copy; TaskTrac2 2014</p>
+    </footer>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <!--<script src="js/vendor/bootstrap-editable.min.js"></script>-->
+    <script src="js/vendor/bootstrap-editable.min.js"></script>
+    <script src="js/vendor/select2.js"></script>
+    <script src="js/vendor/address.js"></script>
+    <script src="js/main.js"></script>
+    <app-root>Loading...</app-root>
+  
+    <script src="vendor/es6-shim/es6-shim.js"></script>
+    <script src="vendor/reflect-metadata/Reflect.js"></script>
+    <script src="vendor/systemjs/dist/system.src.js"></script>
+    <script src="vendor/zone.js/dist/zone.js"></script>
+    <script>
+      System.import('system-config.js').then(function () {
+        System.import('main');
+      }).catch(console.error.bind(console));
+    </script>
+</body>
+
+</html>
